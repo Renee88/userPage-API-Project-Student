@@ -76,9 +76,6 @@ body {
     padding-left: 1vmax;
 }
 
-ul {
-    list-style-type: none;
-}
 
 .buttons {
     position: fixed;
@@ -125,4 +122,8 @@ button {
 .meat-text {
     padding: 1vw;
     font-size: 1vmax;
+}
+
+.friend{
+    color: black;
 }

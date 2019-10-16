@@ -5,27 +5,23 @@ class APIManager {
         this.data = {}
     }
 
-    
- 
-    loadData() {
-        let randomPokeNum = Math.floor(Math.random() * 964) 
-        let types = ["all-meat","meat-and-filler"]
-        let indexType = Math.floor(Math.random() * 2)
-        let type = types[indexType]
-        let paras = 1
-        let startWithLorem = Math.floor(Math.random() * 3)
-
+    loadUsers(){
         $.ajax({
             method: "GET",
             url: "https://randomuser.me/api/?results=7",
             success: (users) => {
-                this.data["users"] = users.results
+                let usersData = users.results
+                this.data["users"] = []
+                this.data["users"].push({mainUser: usersData.splice(0,1)})
+                this.data["users"].push({friends: usersData}) 
             },
             error: function () {
                 alert("Check your internet connection")
             }
         })
+    }
 
+    loadQuote(){
         $.ajax({
             method: "GET",
             url: "https://api.kanye.rest/",
@@ -37,8 +33,10 @@ class APIManager {
                 alert("Check your internet connection")
             }
         })
-
-
+    }
+        
+    loadPokemon(){
+        let randomPokeNum = Math.floor(Math.random() * 964)
         $.ajax({
             method: "GET",
             url: `https://pokeapi.co/api/v2/pokemon/${randomPokeNum}/`,
@@ -52,7 +50,14 @@ class APIManager {
             }
             
         })
+    }
 
+    loadAbout(){
+        let types = ["all-meat","meat-and-filler"]
+        let indexType = Math.floor(Math.random() * 2)
+        let type = types[indexType]
+        let paras = 1
+        let startWithLorem = Math.floor(Math.random() * 3)
         $.ajax({
             method: "GET",
             url: `https://baconipsum.com/api/?type=${type}&paras=${paras}&start-with-lorem=${startWithLorem}`,
@@ -63,13 +68,14 @@ class APIManager {
                 alert("Check your internet connection")
             }
         })
-
-
-    //you should make all your API requests here
-    //each request should update the `data` object accordingly
+    }
+    
+ 
+    loadData() {
+       this.loadUsers()
+       this.loadQuote()
+       this.loadPokemon()
+       this.loadAbout() 
 }
 }
 
-let api = new APIManager()
-
-api.loadData()
