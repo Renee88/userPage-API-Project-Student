@@ -28,18 +28,20 @@
                 </div>	
                 <div class="buttons">	
                     <button id = "load">Load User Data</button>	
-                    <button id = "display">Display User</button>	
+                    <button id = "display">Display User</button>
+                    <button id="save">Save User Page</button>
+                    <button id = "load-page">Load User Page</button>
                 </div>	
             </div>
 
     
     <script id="user-template" type="text/x-handlebars-template">
         {{#each mainUser}}
-        <div class ="main-user"></div>
             <img id = "profile-pic" src = "{{picture.large}}">
-            <div class = "user-info">{{name.first}} {{name.last}}</div>
+            {{#with name}}
+            <div class = "user-info"></div> {{#firstUpper first}} {{/firstUpper}} {{#firstUpper last}} {{/firstUpper}}</div>
+            {{/with}}
             <div class = "address">{{location.city}}, {{location.state}}</div>
-        </div>
         {{/each}}
         
     </script>
@@ -48,7 +50,9 @@
         {{#each friends}}
         <div class ="friend">
             <img src = "{{picture.thumbnail}}">
-            <div class = "user-info">{{name.first}} {{name.last}} </div>
+            {{#with name}}
+            <div class = "user-info"> {{#firstUpper first}} {{/firstUpper}} {{#firstUpper last}} {{/firstUpper}}</div>
+            {{/with}}
             <div class = "address"></div>{{location.city}}, {{location.state}}</div>
         </div>
         {{/each}}
@@ -59,8 +63,9 @@
     </script>
 
     <script id="pokemon-template" type="text/x-handlebars-template">
-        <div class = "pokemon">{{name}}</div>
+        <div class = "pokemon">{{#firstUpper name}} {{/firstUpper}}</div>
         <img src="{{image}}">
+        
     </script>
 
     <script id="about-template" type="text/x-handlebars-template">

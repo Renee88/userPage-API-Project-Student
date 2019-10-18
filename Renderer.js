@@ -1,9 +1,10 @@
 // Fill in the functions for your Renderer Class
 
-class Renderer{
+class Renderer {
 
-     _renderUsers(users) {
-        let mainUser = users[0].mainUser
+    _renderUsers(users) {
+        $(".user-container").empty()
+        let mainUser = users.mainUser
         let source = $("#user-template").html()
         let template = Handlebars.compile(source)
         let newUserHTML = template({mainUser})
@@ -11,21 +12,24 @@ class Renderer{
     }
 
     _renderFriends(users) {
-        let friends = users[1].friends
+        $(".friends-container").empty()
+        let friends = users.friends
         let source = $("#friends-template").html()
         let template = Handlebars.compile(source)
-        let newFriendsHTML = template({friends})
+        let newFriendsHTML = template({ friends })
         $(".friends-container").append(newFriendsHTML)
     }
 
     _renderQuote(quote) {
+        $(".quote-container").empty()
         let source = $("#quote-template").html()
         let template = Handlebars.compile(source)
-        let newQuoteHTML = template({quote})
+        let newQuoteHTML = template({ quote })
         $(".quote-container").append(newQuoteHTML)
     }
 
     _renderPokemon(pokemon) {
+        $(".pokemon-container").empty()
         let source = $("#pokemon-template").html()
         let template = Handlebars.compile(source)
         let newPokemonHTML = template(pokemon)
@@ -33,20 +37,23 @@ class Renderer{
     }
 
     _renderMeat(about) {
+        $(".about-container").empty()
         let source = $("#about-template").html()
         let template = Handlebars.compile(source)
-        let newAboutHTML = template({about})
+        let newAboutHTML = template({ about })
         $(".about-container").append(newAboutHTML)
     }
 
-    render(data){
-     this._renderUsers(data.users) 
-     this._renderFriends(data.users)
-     this._renderQuote(data.quote)
-     this._renderPokemon(data.pokemon)
-     this._renderMeat(data.about)
+    render(data) {
+        Handlebars.registerHelper("firstUpper", function(name){
+            let upperName = name[0].toUpperCase() + name.slice(1)
+            return upperName
+        })
+        this._renderUsers(data.users)
+        this._renderFriends(data.users)
+        this._renderQuote(data.quote)
+        this._renderPokemon(data.pokemon)
+        this._renderMeat(data.about)
     }
 }
-
-
 
