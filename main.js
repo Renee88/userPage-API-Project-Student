@@ -14,3 +14,8 @@ $("#display").on("click", function(){
 $("#save").on("click",function(){
     api.saveUser()
 })
+
+$("#load-page").on("click",function(){
+    let savedUsers = api.loadSavedUsers()
+    renderer.render(savedUsers)
+})

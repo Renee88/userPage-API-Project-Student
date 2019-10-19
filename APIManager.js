@@ -1,9 +1,11 @@
 //This is the class that will manage all your APIs
+let key
 
 class APIManager {
     constructor() {
         this.data = {}
     }
+    
 
     loadUsers() {
         $.ajax({
@@ -12,8 +14,10 @@ class APIManager {
             success: (users) => {
                 let usersData = users.results
                 this.data["users"] = {}
-                this.data["users"].mainUser = usersData.splice(0, 1)
-                this.data["users"].friends =  usersData 
+                let mainUser = usersData.splice(0, 1)
+                this.data.users["mainUser"] = mainUser
+                this.data.users["friends"] = usersData
+                
             },
             error: function () {
                 alert("Check your internet connection")
@@ -27,7 +31,7 @@ class APIManager {
             url: "https://api.kanye.rest/",
             success: (quoteObj) => {
                 let randQuote = quoteObj.quote
-                this.data["quote"] = randQuote
+                this.data.quote = randQuote
             },
             error: function () {
                 alert("Check your internet connection")
@@ -43,7 +47,7 @@ class APIManager {
             success: (pokemon) => {
                 let pokemonName = pokemon.name
                 let pokemonImg = pokemon.sprites.front_default
-                this.data["pokemon"] = { name: pokemonName, image: pokemonImg }
+                this.data.pokemon = { name: pokemonName, image: pokemonImg }
             },
             error: function () {
                 alert("Check your internet connection")
@@ -62,7 +66,7 @@ class APIManager {
             method: "GET",
             url: `https://baconipsum.com/api/?type=${type}&paras=${paras}&start-with-lorem=${startWithLorem}`,
             success: (backonIpsum) => {
-                this.data["about"] = backonIpsum[0]
+                this.data.about = backonIpsum[0]
             },
             error: function () {
                 alert("Check your internet connection")
@@ -79,19 +83,48 @@ class APIManager {
     }
 
     saveUser() {
-        let userSnapShot = {
-            firstName: this.data.users.mainUser[0].name.first, 
-            LastName: this.data.users.mainUser[0].name.last,
+        let key = this.data.users.mainUser[0].name.first +"_" + this.data.users.mainUser[0].name.last
+        let usersSnapshot = {}
+        usersSnapshot[key] = {
+            mainUser: [{
+                name: {
+
+                    first: this.data.users.mainUser[0].name.first,
+                    last: this.data.users.mainUser[0].name.last
+                },
+                picture: this.data.users.mainUser[0].picture,
+
+                location: {
+                    city: this.data.users.mainUser[0].location.city,
+                    state: this.data.users.mainUser[0].location.state
+                }
+            }],
+            friends: this.data.users.friends.map(f => {
+                return {
+                    name: {
+                        first: f.name.first, last: f.name.last
+                    },
+                    picture: f.picture
+                }
+            }),
+
             quote: this.data.quote,
             pokemon: {
                 name: this.data.pokemon.name,
                 image: this.data.pokemon.image
             },
-            friends: this.data.users.friends.map(f =>{return {firstName: f.name.first, lastName: f.name.last}})
+            about: this.data.about
         }
-
-        localStorage.userDetails = JSON.stringify(userSnapShot)
+        localStorage.users = {}
+        localStorage.users = JSON.stringify(usersSnapshot)
+        
         
     }
 
+    loadSavedUser() {
+        return JSON.parse(localStorage.users)
+    }
 }
+
+
+
