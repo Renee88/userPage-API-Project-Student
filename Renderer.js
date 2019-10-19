@@ -44,13 +44,19 @@ class Renderer {
         $(".about-container").append(newAboutHTML)
     }
 
-    _renderDropDownMenu(){
-        $(".dropdown").empty()
+    _renderSavedUsers(){
+        Handlebars.registerHelper("firstUpper", function(name){
+            let upperName = name[0].toUpperCase() + name.slice(1)
+            return upperName
+        })
+        $(".users-dropdown").empty()
         let dropDownUsers = api.loadSavedUsers()
         let source = $("#menu-template").html()
         let template = Handlebars.compile(source)
-        let newAboutHTML = template({dropDownUsers})    
+        let newDropDownHTML = template({dropDownUsers})
+        $(".users-dropdown").append(newDropDownHTML)
     }
+
 
     render(data) {
         Handlebars.registerHelper("firstUpper", function(name){
@@ -62,7 +68,7 @@ class Renderer {
         this._renderQuote(data.quote)
         this._renderPokemon(data.pokemon)
         this._renderMeat(data.about)
-        this._renderDropDownMenu()
+        // this._renderSavedUsers()
     }
 }
 

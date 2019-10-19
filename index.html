@@ -22,7 +22,11 @@
                     <div class="about-container"></div>	
                 </div>
 
-                <div class = "dropdown"></div>
+                <div class="drop-down-menu">
+                    <div id = "dropdownbtn">Saved users</div>
+                    <div class = "users-dropdown"></div>
+                </div>
+                
 
                 <div class="friends">	
                     <h4>Friends</h4>	
@@ -41,22 +45,20 @@
     <script id="user-template" type="text/x-handlebars-template">
         {{#each mainUser}}
             <img id = "profile-pic" src = "{{picture.large}}">
-            {{#with name}}
-            <div class = "user-info"></div> {{#firstUpper first}} {{/firstUpper}} {{#firstUpper last}} {{/firstUpper}}</div>
-            {{/with}}
-            <div class = "address">{{location.city}}, {{location.state}}</div>
+            <div class = "user-info">{{#firstUpper name.first}} {{/firstUpper}} {{#firstUpper name.last}} {{/firstUpper}}</div>
+            <div class = "address">{{location.city}}, {{location.state}}</div> 
         {{/each}}
         
     </script>
 
     <script id="menu-template" type="text/x-handlebars-template">
-        <ul>
+        <div class = "list">
             {{#each dropDownUsers}}
-            {{#with name}}
-            <li class = "dd-users">{{#firstUpper first}} {{/firstUpper}} {{#firstUpper last}} {{/firstUpper}}</li>
-            {{/with}}
+            {{#each mainUser}}
+            <div class = "dd-users">{{#firstUpper name.first}} {{/firstUpper}} {{#firstUpper name.last}} {{/firstUpper}}</div>
             {{/each}}
-        </ul>
+            {{/each}}
+        </div>
         
     </script>
 
@@ -64,9 +66,7 @@
         {{#each friends}}
         <div class ="friend">
             <img src = "{{picture.thumbnail}}">
-            {{#with name}}
-            <div class = "user-info"> {{#firstUpper first}} {{/firstUpper}} {{#firstUpper last}} {{/firstUpper}}</div>
-            {{/with}}
+            <div class = "user-info"> {{#firstUpper name.first}} {{/firstUpper}} {{#firstUpper name.last}} {{/firstUpper}}</div>
             <div class = "address"></div>{{location.city}}, {{location.state}}</div>
         </div>
         {{/each}}

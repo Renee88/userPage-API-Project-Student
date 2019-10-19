@@ -85,7 +85,7 @@ class APIManager {
     saveUser() {
         let key = this.data.users.mainUser[0].name.first +"_" + this.data.users.mainUser[0].name.last
         let userSnapshot = {}
-        userSnapshot[key] = {
+        userSnapshot = {
             mainUser: this.data.users.mainUser,
                 
             friends: this.data.users.friends,

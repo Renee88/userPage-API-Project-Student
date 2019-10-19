@@ -19,3 +19,9 @@ $("#load-page").on("click",function(){
     let savedUsers = api.loadSavedUsers()
     renderer.render(savedUsers)
 })
+
+$("#dropdownbtn").hover(
+    renderer._renderSavedUsers,
+     function(){
+    $(".users-dropdown").empty()
+})
