@@ -1,11 +1,11 @@
 //This is the class that will manage all your APIs
-let key
+
 
 class APIManager {
     constructor() {
         this.data = {}
     }
-    
+
 
     loadUsers() {
         $.ajax({
@@ -17,7 +17,7 @@ class APIManager {
                 let mainUser = usersData.splice(0, 1)
                 this.data.users["mainUser"] = mainUser
                 this.data.users["friends"] = usersData
-                
+
             },
             error: function () {
                 alert("Check your internet connection")
@@ -83,11 +83,11 @@ class APIManager {
     }
 
     saveUser() {
-        let key = this.data.users.mainUser[0].name.first +"_" + this.data.users.mainUser[0].name.last
+        let key = this.data.users.mainUser[0].name.first + "_" + this.data.users.mainUser[0].name.last
         let userSnapshot = {}
         userSnapshot = {
             mainUser: this.data.users.mainUser,
-                
+
             friends: this.data.users.friends,
 
             quote: this.data.quote,
@@ -97,8 +97,8 @@ class APIManager {
             },
             about: this.data.about
         }
-        
-        if (!localStorage.users){
+
+        if (!localStorage.users) {
             let users = {}
             users[key] = userSnapshot
             localStorage.users = JSON.stringify(users)
@@ -108,18 +108,32 @@ class APIManager {
             parsedUsers[key] = userSnapshot
             localStorage.users = JSON.stringify(parsedUsers)
         }
-        
+
     }
 
-    loadSavedUsers() {
+    showSavedUsers() {
         let savedUsers = JSON.parse(localStorage.users)
         let keys = Object.keys(savedUsers)
         let usersArray = []
-        for(let i=0; i<keys.length; i++){
-           let key = keys[i]
-            usersArray.push(savedUsers[key])
+        for (let i = 0; i < keys.length; i++) {
+            let key = keys[i]
+                usersArray.push(savedUsers[key])
         }
+
         return usersArray
+    }
+
+    showSelectedUser(name){
+        let savedUsers = JSON.parse(localStorage.users)
+        let keys = Object.keys(savedUsers)
+        let selectedUser = {}
+        for(let i=0; i<keys.length ; i++){
+           let key = keys[i]
+            if(key === name){
+                selectedUser[key] = savedUsers[key]
+            }
+        }
+        return selectedUser 
     }
 }
 

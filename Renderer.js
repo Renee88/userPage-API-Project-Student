@@ -45,16 +45,17 @@ class Renderer {
     }
 
     _renderSavedUsers(){
-        Handlebars.registerHelper("firstUpper", function(name){
-            let upperName = name[0].toUpperCase() + name.slice(1)
-            return upperName
-        })
-        $(".users-dropdown").empty()
-        let dropDownUsers = api.loadSavedUsers()
-        let source = $("#menu-template").html()
-        let template = Handlebars.compile(source)
-        let newDropDownHTML = template({dropDownUsers})
-        $(".users-dropdown").append(newDropDownHTML)
+            Handlebars.registerHelper("firstUpper", function(name){
+                let upperName = name[0].toUpperCase() + name.slice(1)
+                return upperName
+            })
+            $(".users-dropdown").empty()
+            let dropDownUsers = api.showSavedUsers()
+            let source = $("#menu-template").html()
+            let template = Handlebars.compile(source)
+            let newDropDownHTML = template({dropDownUsers})
+            $(".users-dropdown").append(newDropDownHTML)
+        
     }
 
 
@@ -63,12 +64,23 @@ class Renderer {
             let upperName = name[0].toUpperCase() + name.slice(1)
             return upperName
         })
+
+        let key = Object.keys(data)
+        if(key.length == 1){
+        this._renderUsers(data[key])
+        this._renderFriends(data[key])
+        this._renderQuote(data[key].quote)
+        this._renderPokemon(data[key].pokemon)
+        this._renderMeat(data[key].about)
+        } else{
         this._renderUsers(data.users)
         this._renderFriends(data.users)
         this._renderQuote(data.quote)
         this._renderPokemon(data.pokemon)
         this._renderMeat(data.about)
-        // this._renderSavedUsers()
+        }
+        
+        
     }
 }
 

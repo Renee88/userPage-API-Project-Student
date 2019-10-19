@@ -3,25 +3,35 @@ const api = new APIManager()
 const renderer = new Renderer()
 
 // Create the loadData and renderData functions - these should use the relevant instance
-$("#load").on("click",function(){
+$("#load").on("click", function () {
     api.loadData()
 })
 
-$("#display").on("click", function(){
+$("#display").on("click", function () {
     renderer.render(api.data)
 })
 
-$("#save").on("click",function(){
+$("#save").on("click", function () {
     api.saveUser()
 })
 
-$("#load-page").on("click",function(){
-    let savedUsers = api.loadSavedUsers()
-    renderer.render(savedUsers)
+$(".users-dropdown").on("click",".dd-users",function(){
+    let userName = $(this).text()
+    let name = userName.split(" ").join("_")
+
+    $("#load-page").on("click", function () {
+        let savedUser = api.showSelectedUser(name)
+        renderer.render(savedUser)
+    })
 })
 
-$("#dropdownbtn").hover(
+
+
+$(".drop-down-menu").hover(
     renderer._renderSavedUsers,
-     function(){
-    $(".users-dropdown").empty()
-})
+    function () {
+        $(".users-dropdown").empty()
+    })
+
+
+
