@@ -84,8 +84,8 @@ class APIManager {
 
     saveUser() {
         let key = this.data.users.mainUser[0].name.first +"_" + this.data.users.mainUser[0].name.last
-        let usersSnapshot = {}
-        usersSnapshot[key] = {
+        let userSnapshot = {}
+        userSnapshot[key] = {
             mainUser: [{
                 name: {
 
@@ -115,9 +115,17 @@ class APIManager {
             },
             about: this.data.about
         }
-        localStorage.users = {}
-        localStorage.users = JSON.stringify(usersSnapshot)
         
+        if (!localStorage.users){
+            let users = {}
+            users[key] = userSnapshot
+            localStorage.users = JSON.stringify(users)
+        } else {
+
+            let parsedUsers = JSON.parse(localStorage.users)
+            parsedUsers[key] = userSnapshot
+            localStorage.users = JSON.stringify(parsedUsers)
+        }
         
     }
 
