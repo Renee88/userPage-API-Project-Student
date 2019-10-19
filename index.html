@@ -20,7 +20,10 @@
                 <div class="content-container">	
                     <div class="pokemon-container"></div>	
                     <div class="about-container"></div>	
-                </div>	
+                </div>
+
+                <div class = "dropdown"></div>
+
                 <div class="friends">	
                     <h4>Friends</h4>	
                     <div class="friends-container">	
@@ -43,6 +46,17 @@
             {{/with}}
             <div class = "address">{{location.city}}, {{location.state}}</div>
         {{/each}}
+        
+    </script>
+
+    <script id="menu-template" type="text/x-handlebars-template">
+        <ul>
+            {{#each dropDownUsers}}
+            {{#with name}}
+            <li class = "dd-users">{{#firstUpper first}} {{/firstUpper}} {{#firstUpper last}} {{/firstUpper}}</li>
+            {{/with}}
+            {{/each}}
+        </ul>
         
     </script>
 

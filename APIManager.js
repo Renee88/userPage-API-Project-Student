@@ -86,27 +86,9 @@ class APIManager {
         let key = this.data.users.mainUser[0].name.first +"_" + this.data.users.mainUser[0].name.last
         let userSnapshot = {}
         userSnapshot[key] = {
-            mainUser: [{
-                name: {
-
-                    first: this.data.users.mainUser[0].name.first,
-                    last: this.data.users.mainUser[0].name.last
-                },
-                picture: this.data.users.mainUser[0].picture,
-
-                location: {
-                    city: this.data.users.mainUser[0].location.city,
-                    state: this.data.users.mainUser[0].location.state
-                }
-            }],
-            friends: this.data.users.friends.map(f => {
-                return {
-                    name: {
-                        first: f.name.first, last: f.name.last
-                    },
-                    picture: f.picture
-                }
-            }),
+            mainUser: this.data.users.mainUser,
+                
+            friends: this.data.users.friends,
 
             quote: this.data.quote,
             pokemon: {
@@ -129,8 +111,15 @@ class APIManager {
         
     }
 
-    loadSavedUser() {
-        return JSON.parse(localStorage.users)
+    loadSavedUsers() {
+        let savedUsers = JSON.parse(localStorage.users)
+        let keys = Object.keys(savedUsers)
+        let usersArray = []
+        for(let i=0; i<keys.length; i++){
+           let key = keys[i]
+            usersArray.push(savedUsers[key])
+        }
+        return usersArray
     }
 }
 
